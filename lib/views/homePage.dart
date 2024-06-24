@@ -52,18 +52,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: const Text(
-          'Furni Order',
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {}, 
-            icon: const Icon(Icons.shopping_cart)
-          )
-        ],
-      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(15),
         child: Column(
@@ -152,9 +140,9 @@ class _ProfileInformation extends StatelessWidget {
             shape: BoxShape.circle,
             border: Border.all(color: Colors.black54)
           ),
-          child: const Icon(
-            Icons.person,
-            size: 30,
+          child: const CircleAvatar(
+            radius: 80,
+            backgroundImage: AssetImage('assets/images/avatar.jpg'),
           ),
         ),
 
@@ -166,7 +154,7 @@ class _ProfileInformation extends StatelessWidget {
             children: [
               // User Greeting
               Text(
-                'Hai, Ahmad Dimayati',
+                'Hai, Ahmad Dimyati',
                 textAlign: TextAlign.start,
                 style: TextStyle(
                   fontSize: 17,

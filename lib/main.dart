@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furni_order/views/auth/loginPage.dart';
+import 'package:furni_order/views/widget/navbar.dart';
 
 void main() {
   runApp(const FurniOrderApp());
@@ -15,7 +16,7 @@ class FurniOrderApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.blue
       ),
-      home: const LoginPage(),
+      home: const Navbar(),
     );
   }
 }
