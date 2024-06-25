@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:furni_order/views/auth/registerPage.dart';
-import 'package:furni_order/views/homePage.dart';
+import 'package:furni_order/page/auth/registerPage.dart';
+import 'package:furni_order/page/widget/navbar.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -20,9 +20,10 @@ class _LoginPageState extends State<LoginPage> {
       final String password = _password.text;
 
       if (username == 'ahdim' && password == 'ahdim123') {
+        FocusScope.of(context).unfocus();
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => HomePage()),
+          MaterialPageRoute(builder: (context) => const Navbar()),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -35,7 +36,11 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        forceMaterialTransparency: true,
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: ConstrainedBox(
@@ -63,19 +68,21 @@ class _LoginPageState extends State<LoginPage> {
                   'Furni Order',
                   style: TextStyle(
                     fontSize: 15,
-                    fontStyle: FontStyle.italic
-                  ),
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black,
+                  )
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 60),
 
                 // Welcome
                 const Text(
                   'Selamat Datang',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18,
-                  ),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
+                  )
                 ),
                 const SizedBox(height: 10),
 
@@ -83,6 +90,10 @@ class _LoginPageState extends State<LoginPage> {
                 const Text(
                   'Silahkan login dengan akun anda untuk\nmasuk ke aplikasi',
                   textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w300,
+                    color: Colors.black,
+                  ),
                 ),
                 const SizedBox(height: 20),
 
@@ -93,6 +104,9 @@ class _LoginPageState extends State<LoginPage> {
                     labelText: 'Username',
                     hintText: 'Masukan username...',
                     border: OutlineInputBorder(),
+                    focusedBorder:OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue, width: 2.0)
+                    ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -111,6 +125,9 @@ class _LoginPageState extends State<LoginPage> {
                     labelText: 'Password',
                     hintText: 'Masukan Password...',
                     border: OutlineInputBorder(),
+                    focusedBorder:OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue, width: 2.0)
+                    ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -134,8 +151,10 @@ class _LoginPageState extends State<LoginPage> {
                     child: const Text(
                       'Login',
                       style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
                         color: Colors.white,
-                      ),
+                      )
                     ),
                   ),
                 ),
@@ -149,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => RegisterPage()),
+                            MaterialPageRoute(builder: (context) => const RegisterPage()),
                           );
                         },
                         child: const Text(

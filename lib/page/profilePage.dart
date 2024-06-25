@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:furni_order/views/homePage.dart';
+import 'package:furni_order/page/auth/loginPage.dart';
+import 'package:furni_order/page/dialog/updateProfile.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _ProfilePageState extends State<ProfilePage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _nama = TextEditingController();
-  final TextEditingController _email = TextEditingController();
-  final TextEditingController _telepon = TextEditingController();
-  final TextEditingController _alamat = TextEditingController();
-  final TextEditingController _username = TextEditingController();
+  final TextEditingController _nama = TextEditingController(text: 'Ahmad Dimyati');
+  final TextEditingController _email = TextEditingController(text: 'dimyati336@gmail.com');
+  final TextEditingController _telepon = TextEditingController(text: '0895617614604');
+  final TextEditingController _alamat = TextEditingController(text: 'Kp. Mahmud, Desa mekarrahayu, Kecamatan margaasih, Kab bandung');
+  final TextEditingController _username = TextEditingController(text: 'ahdim');
   final TextEditingController _password = TextEditingController();
 
-  void _registerProccess() {
+  void _updateProccess() {
     if (_formKey.currentState!.validate()) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return const UpdateProfile();
+        },
       );
     }
   }
@@ -30,8 +33,28 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
+        backgroundColor: Colors.blue,
+        title: const Text(
+          'Furni Order',
+          style: TextStyle(
+            fontWeight: FontWeight.w800,
+            color: Colors.white,
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+              );
+            }, 
+            icon: const Icon(Icons.logout_rounded, color: Colors.white)
+          )
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -40,44 +63,35 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const SizedBox(height: 20),
+
               // Logo
               const Align(
                 alignment: Alignment.center,
-                child: Image(
-                  image: AssetImage('assets/images/logo.png'),
-                  width: 80,
-                  height: 80,
+                child: CircleAvatar(
+                  radius: 80,
+                  backgroundImage: AssetImage('assets/images/avatar.jpg'),
                 ),
               ),
               const SizedBox(height: 5),
 
               // App Title
               const Text(
-                'Furni Order',
+                'Ahmad Dimyati',
                 style: TextStyle(
                   fontSize: 15,
-                  fontStyle: FontStyle.italic
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              // Welcome
-              const Text(
-                'Registrasi',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 18,
-                ),
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black,
+                )
               ),
               const SizedBox(height: 10),
 
               // Subtitle
               const Text(
-                'Silahkan isi semua data dibawah ini untuk membuat akun',
+                'Teknik Informatika at UNIBI',
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
 
               // Nama
               TextFormField(
@@ -86,6 +100,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   labelText: 'Nama',
                   hintText: 'Masukan nama...',
                   border: OutlineInputBorder(),
+                  focusedBorder:OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue, width: 2.0)
+                  ),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -103,6 +120,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   labelText: 'Email',
                   hintText: 'Masukan email...',
                   border: OutlineInputBorder(),
+                  focusedBorder:OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue, width: 2.0)
+                  ),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -120,6 +140,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   labelText: 'Telepon',
                   hintText: 'Masukan telepon...',
                   border: OutlineInputBorder(),
+                  focusedBorder:OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue, width: 2.0)
+                  ),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -138,6 +161,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   labelText: 'Alamat',
                   hintText: 'Masukan alamat...',
                   border: OutlineInputBorder(),
+                  focusedBorder:OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue, width: 2.0)
+                  ),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -155,6 +181,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   labelText: 'Username',
                   hintText: 'Masukan username...',
                   border: OutlineInputBorder(),
+                  focusedBorder:OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue, width: 2.0)
+                  ),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -173,13 +202,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   labelText: 'Password',
                   hintText: 'Masukan Password...',
                   border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Password tidak boleh kosong';
-                  }
-                  return null;
-                },
+                  focusedBorder:OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue, width: 2.0)
+                  ),
+                )
               ),
               const SizedBox(height: 10),
 
@@ -191,13 +217,15 @@ class _RegisterPageState extends State<RegisterPage> {
                     backgroundColor: MaterialStatePropertyAll(Colors.blue),
                   ),
                   onPressed: () {
-                    _registerProccess();
+                    _updateProccess();
                   },
                   child: const Text(
-                    'Login',
+                    'Update',
                     style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
                       color: Colors.white,
-                    ),
+                    )
                   ),
                 ),
               ),

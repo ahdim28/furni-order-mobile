@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:furni_order/views/cartPage.dart';
-import 'package:furni_order/views/homePage.dart';
-import 'package:furni_order/views/profilePage.dart';
-import 'package:furni_order/views/transactionPage.dart';
+import 'package:furni_order/page/cartPage.dart';
+import 'package:furni_order/page/homePage.dart';
+import 'package:furni_order/page/profilePage.dart';
+import 'package:furni_order/page/transactionPage.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 
 class Navbar extends StatefulWidget {
@@ -32,23 +32,34 @@ class _NavbarState extends State<Navbar> {
       ),
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.blue,
           title: const Text(
             'Furni Order',
             style: TextStyle(
-              color: Colors.white
+              fontWeight: FontWeight.w800,
+              color: Colors.white,
             ),
           ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfilePage()),
+                );
+              }, 
+              icon: const Icon(Icons.person_2_outlined, color: Colors.white)
+            )
+          ],
         ),
-        // backgroundColor: Colors.grey,
         body: PageView(
           physics: const NeverScrollableScrollPhysics(),
           controller: pageController,
           children: const <Widget>[
             HomePage(),
             CartPage(),
-            TransactionPage(),
-            ProfilePage()
+            TransactionPage()
           ],
         ),
         bottomNavigationBar: WaterDropNavBar(
@@ -74,11 +85,7 @@ class _NavbarState extends State<Navbar> {
             BarItem(
               filledIcon: Icons.list_rounded,
               outlinedIcon: Icons.list_outlined,
-            ),
-            BarItem(
-              filledIcon: Icons.person_rounded,
-              outlinedIcon: Icons.person_outline,
-            ),
+            )
           ],
         ),
       ),

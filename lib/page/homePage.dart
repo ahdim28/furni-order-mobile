@@ -1,50 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-
-class ProductModel {
-  final String name;
-  final double price;
-  final double rating;
-  final int reviewCount;
-  final double? discountPercentage;
-
-  ProductModel({
-    required this.name,
-    required this.price,
-    required this.rating,
-    required this.reviewCount,
-    this.discountPercentage,
-  });
-}
-
-// Data Source - Product List
-List<ProductModel> productList = [
-  ProductModel(
-    name: 'Meja Kantor - Hitam', 
-    price: 900000, 
-    rating: 4.5, 
-    reviewCount: 20
-  ),
-  ProductModel(
-    name: 'Meja Kantor - Putih', 
-    price: 810000, 
-    rating: 4.5, 
-    reviewCount: 20,
-    discountPercentage: 10,
-  ),
-  ProductModel(
-    name: 'Meja Kantor - Hitam', 
-    price: 900000, 
-    rating: 4.5, 
-    reviewCount: 20
-  ),
-  ProductModel(
-    name: 'Meja Kantor - Hitam', 
-    price: 900000, 
-    rating: 4.5, 
-    reviewCount: 20
-  ),
-];
+import 'package:furni_order/data/product.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -56,15 +11,29 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.all(15),
         child: Column(
           children: [
-            // Profile Image, User Name, and Subtitle
+            // profile information
             const _ProfileInformation(),
 
-            const SizedBox(height: 20,),
+            const SizedBox(height: 20),
 
-            // Search
-            const _SearchInput(),
+            // category product list
+            SizedBox(
+              height: 40,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: categories.length,
+                itemBuilder: (context, index) {
+                  return _CategoryList(
+                    data: categories[index]
+                  );
+                }, separatorBuilder: (BuildContext context, int index) { 
+                  return SizedBox(width: 10);
+                 },
+              ),
+            ),
 
-            const SizedBox(height: 20.0,),
+            const SizedBox(height: 20),
 
             // Store Item List
             GridView.builder(
@@ -76,10 +45,10 @@ class HomePage extends StatelessWidget {
                 crossAxisSpacing: 10,
                 mainAxisExtent: 290
               ), 
-              itemCount: productList.length,
+              itemCount: products.length,
               itemBuilder: (context, index) {
-                return _ProductListItem(
-                  data: productList[index]
+                return _ProductList(
+                  data: products[index]
                 );
               },
             )
@@ -90,75 +59,37 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class _SearchInput extends StatelessWidget {
-  const _SearchInput({
-    Key? key,
-  }) : super(key: key);
+// profile information
+class _ProfileInformation extends StatelessWidget {
+  const _ProfileInformation({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Row(
       children: [
-        Expanded(
-          child: TextField(
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.zero,
-              isDense: true,
-              prefixIcon: Icon(Icons.search),
-              hintText: 'Cari produk...',
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black)
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.blue)
-              ),
-            ),
-          ),
-        ),
-        SizedBox(width: 10,),
-        Icon(Icons.filter_list)
-      ],
-    );
-  }
-}
-
-class _ProfileInformation extends StatelessWidget {
-  const _ProfileInformation({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        // Profile Image
-        Container(
-          width: 75,
-          height: 75,
-          padding: const EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: Colors.black54)
-          ),
-          child: const CircleAvatar(
-            radius: 80,
+        SizedBox(
+          height: 60,
+          width: 60,
+          child: CircleAvatar(
             backgroundImage: AssetImage('assets/images/avatar.jpg'),
+            maxRadius: 15,
+            minRadius: 15,
           ),
         ),
 
-        const SizedBox(width: 15,),
+        SizedBox(width: 15,),
 
-        const Expanded(
+        Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // User Greeting
               Text(
-                'Hai, Ahmad Dimyati',
+                'Selamat Datang,',
                 textAlign: TextAlign.start,
                 style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold
+                  fontSize: 13,
+                  fontWeight: FontWeight.w100,
                 ),
               ),
               
@@ -166,8 +97,12 @@ class _ProfileInformation extends StatelessWidget {
 
               // Subtitle
               Text(
-                'Silakan cari produk mebel yang Anda inginkan',
+                'Ahmad Dimyati',
                 textAlign: TextAlign.start,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ],
           ),
@@ -177,10 +112,52 @@ class _ProfileInformation extends StatelessWidget {
   }
 }
 
-class _ProductListItem extends StatelessWidget {
+// category list
+class _CategoryList extends StatelessWidget {
+  final Map<String, String> data;
+
+  const _CategoryList({
+    Key? key, 
+    required this.data,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.blue, width: 2)
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.home, color: Colors.blue),
+              const SizedBox(width: 7),
+              Text(
+                data['nama']!, 
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.blue
+                )
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+// product list
+class _ProductList extends StatelessWidget {
   final ProductModel data;
   
-  const _ProductListItem({
+  const _ProductList({
     Key? key, 
     required this.data,
   }) : super(key: key);
@@ -210,9 +187,13 @@ class _ProductListItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Product Image
-          const SizedBox(
+          SizedBox(
             height: 180,
-            child: Placeholder()
+            width: 190,
+            child: Image.asset(
+              'assets/images/products/1.jpg',
+              fit: BoxFit.cover,
+            )
           ),
 
           Container(
