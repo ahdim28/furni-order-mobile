@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furni_order/page/auth/loginPage.dart';
-import 'package:furni_order/page/dialog/updateProfile.dart';
+import 'package:furni_order/page/dialog/dialogSuccess.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -23,7 +23,7 @@ class _ProfilePageState extends State<ProfilePage> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return const UpdateProfile();
+          return const DialogSuccess();
         },
       );
     }

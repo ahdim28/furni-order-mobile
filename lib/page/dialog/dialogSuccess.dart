@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
-class UpdateProfile extends StatelessWidget {
-  const UpdateProfile({super.key});
+class DialogSuccess extends StatelessWidget {
+  const DialogSuccess({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,26 +19,22 @@ class UpdateProfile extends StatelessWidget {
             repeat: false,
           ),
           const SizedBox(height: 2),
-          Text(
+          const Text(
             'Update Berhasil',
-            style: GoogleFonts.montserrat(
-              textStyle: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-              ),
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 8),
           
-          Text(
+          const Text(
             'Data profile berhasil diperbaharui',
             textAlign: TextAlign.center,
-            style: GoogleFonts.montserrat(
-              textStyle: const TextStyle(
+            style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
               ),
-            ),
           ),
           const SizedBox(height: 16),
           
@@ -47,15 +42,13 @@ class UpdateProfile extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text(
+            child: const Text(
               'OK',
-              style: GoogleFonts.montserrat(
-                textStyle: const TextStyle(
+              style: TextStyle(
                   fontSize: 14,
                   color: Colors.blue,
                   fontWeight: FontWeight.bold,
                 ),
-              ),
             ),
           ),
         ],

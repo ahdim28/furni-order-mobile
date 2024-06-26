@@ -46,7 +46,7 @@ class _NavbarState extends State<Navbar> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ProfilePage()),
+                  MaterialPageRoute(builder: (context) => const ProfilePage()),
                 );
               }, 
               icon: const Icon(Icons.person_2_outlined, color: Colors.white)
