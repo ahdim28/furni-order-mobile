@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furni_order/data/product.dart';
-import 'package:furni_order/productDetailPage.dart';
+import 'package:furni_order/page/productDetailPage.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -29,14 +29,14 @@ class HomePage extends StatelessWidget {
                     data: categories[index]
                   );
                 }, separatorBuilder: (BuildContext context, int index) { 
-                  return SizedBox(width: 10);
+                  return const SizedBox(width: 10);
                  },
               ),
             ),
 
             const SizedBox(height: 20),
 
-            // Store Item List
+            // product list
             GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -84,7 +84,6 @@ class _ProfileInformation extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // User Greeting
               Text(
                 'Selamat Datang,',
                 textAlign: TextAlign.start,
@@ -94,9 +93,8 @@ class _ProfileInformation extends StatelessWidget {
                 ),
               ),
               
-              SizedBox(height: 5,),
+              SizedBox(height: 5),
 
-              // Subtitle
               Text(
                 'Ahmad Dimyati',
                 textAlign: TextAlign.start,
@@ -173,9 +171,9 @@ class _ProductList extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ProductDetailPage(
+          MaterialPageRoute(builder: (context) => ProductDetailPage(
             data: data
           )),
         );
@@ -201,7 +199,7 @@ class _ProductList extends StatelessWidget {
               height: 180,
               width: 190,
               child: Image.asset(
-                'assets/images/products/1.jpg',
+                data.image,
                 fit: BoxFit.cover,
               )
             ),
@@ -309,7 +307,7 @@ class _ProductList extends StatelessWidget {
             )
           ],
         ),
-      );
-    )
+      ),
+    );
   }
 }

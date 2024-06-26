@@ -17,7 +17,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       body: Column(
         children: [
           Text(
-            data.name,
+            widget.data.name,
           ),
         ]
       )
