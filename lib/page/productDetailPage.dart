@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:furni_order/data/product.dart';
 
 class ProductDetailPage extends StatefulWidget {
-  const ProductDetailPage({super.key});
+  final ProductModel data;
+
+  const ProductDetailPage({super.key, required this.data});
 
   @override
   State<ProductDetailPage> createState() => _ProductDetailPageState();
@@ -10,6 +13,14 @@ class ProductDetailPage extends StatefulWidget {
 class _ProductDetailPageState extends State<ProductDetailPage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Column(
+        children: [
+          Text(
+            data.name,
+          ),
+        ]
+      )
+    );
   }
 }
