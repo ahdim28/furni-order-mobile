@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class DialogSuccess extends StatelessWidget {
-  const DialogSuccess({super.key});
+
+  final String title;
+  final String description;
+
+  const DialogSuccess({super.key, required this.title, required this.description});
 
   @override
   Widget build(BuildContext context) {
@@ -19,19 +23,19 @@ class DialogSuccess extends StatelessWidget {
             repeat: false,
           ),
           const SizedBox(height: 2),
-          const Text(
-            'Update Berhasil',
-            style: TextStyle(
+          Text(
+            title,
+            style: const TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 8),
           
-          const Text(
-            'Data profile berhasil diperbaharui',
+          Text(
+            description,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
               ),

@@ -83,8 +83,8 @@ class _NavbarState extends State<Navbar> {
                 filledIcon: Icons.shopping_cart_rounded,
                 outlinedIcon: Icons.shopping_cart_outlined),
             BarItem(
-              filledIcon: Icons.list_rounded,
-              outlinedIcon: Icons.list_outlined,
+              filledIcon: Icons.paid_rounded,
+              outlinedIcon: Icons.paid_outlined,
             )
           ],
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furni_order/data/product.dart';
+import 'package:furni_order/models/product.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final ProductModel data;

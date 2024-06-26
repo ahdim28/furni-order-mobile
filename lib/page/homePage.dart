@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:furni_order/data/product.dart';
-import 'package:furni_order/page/productDetailPage.dart';
+import 'package:furni_order/models/product.dart';
+import 'package:furni_order/page/product_detail_page.dart';
+import 'package:intl/intl.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,8 +32,13 @@ class HomePage extends StatelessWidget {
                 shrinkWrap: true,
                 itemCount: categories.length,
                 itemBuilder: (context, index) {
-                  return _CategoryList(
-                    data: categories[index]
+                  return _CategoryProductList(
+                    category: categories[index],
+                    onTap: (){
+                      setState(() {
+                        categories[index].isActive = !categories[index].isActive;
+                      });
+                    },
                   );
                 }, separatorBuilder: (BuildContext context, int index) { 
                   return const SizedBox(width: 10);
@@ -49,7 +61,7 @@ class HomePage extends StatelessWidget {
               itemCount: products.length,
               itemBuilder: (context, index) {
                 return _ProductList(
-                  data: products[index]
+                  product: products[index]
                 );
               },
             )
@@ -111,42 +123,44 @@ class _ProfileInformation extends StatelessWidget {
   }
 }
 
-// category list
-class _CategoryList extends StatelessWidget {
-  final Map<String, String> data;
+// category product list
+class _CategoryProductList extends StatelessWidget {
+  final CategoryProductModel category;
+  final Function() onTap;
 
-  const _CategoryList({
-    Key? key, 
-    required this.data,
-  }) : super(key: key);
+  const _CategoryProductList({required this.category, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.blue, width: 2)
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(Icons.home, color: Colors.blue),
-              const SizedBox(width: 7),
-              Text(
-                data['nama']!, 
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.blue
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        decoration: BoxDecoration(
+          color: category.isActive ? Colors.blue : Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Colors.blue, width: 2)
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.list, color: category.isActive ? Colors.white : Colors.blue),
+                const SizedBox(width: 7),
+                Text(
+                  category.name, 
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    color: category.isActive ? Colors.white : Colors.blue
+                  )
                 )
-              )
-            ],
-          )
-        ],
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -154,27 +168,40 @@ class _CategoryList extends StatelessWidget {
 
 // product list
 class _ProductList extends StatelessWidget {
-  final ProductModel data;
+  final ProductModel product;
   
-  const _ProductList({
-    Key? key, 
-    required this.data,
-  }) : super(key: key);
+  const _ProductList({required this.product});
+
+  String get formattedPrice {
+    final NumberFormat currencyFormat = NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 0);
+    return currencyFormat.format(product.price);
+  }
+
+  int? getDiscountPrice() {
+    int? discountedPrice;
+
+    if (product.discountPercentage != null) {
+      discountedPrice = (product.price - (product.price * product.discountPercentage!/100)).toInt();
+    }
+
+    return discountedPrice;
+  }
+
+  String get formattedPriceDiscount {
+    final NumberFormat currencyFormat = NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 0);
+    return currencyFormat.format(getDiscountPrice() ?? 0);
+  }
 
   @override
   Widget build(BuildContext context) {
-    int? discountedPrice;
-
-    if (data.discountPercentage != null) {
-      discountedPrice = (data.price - (data.price * data.discountPercentage!/100)).toInt();
-    }
+    
 
     return InkWell(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => ProductDetailPage(
-            data: data
+            product: product
           )),
         );
       },
@@ -199,7 +226,7 @@ class _ProductList extends StatelessWidget {
               height: 180,
               width: 190,
               child: Image.asset(
-                data.image,
+                product.image,
                 fit: BoxFit.cover,
               )
             ),
@@ -212,7 +239,7 @@ class _ProductList extends StatelessWidget {
                 children: [
                   // Product Name
                   Text(
-                    data.name,
+                    product.name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -224,16 +251,16 @@ class _ProductList extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          'Rp.${data.price.toInt()}',
+                          formattedPrice,
                           style: TextStyle(
-                            decoration: data.discountPercentage != null
+                            decoration: product.discountPercentage != null
                               ? TextDecoration.lineThrough
                               : null,
-                            color: data.discountPercentage == null
+                            color: product.discountPercentage == null
                               ? Colors.green
                               : null,
                             fontSize: 12,
-                            fontWeight: FontWeight.bold
+                            fontWeight: FontWeight.w800
                           ),
                         ),
                       ),
@@ -241,17 +268,19 @@ class _ProductList extends StatelessWidget {
                       const SizedBox(width: 8,),
                       
                       // Discount Information
-                      data.discountPercentage != null
+                      product.discountPercentage != null
                         ? Container(
                           padding: const EdgeInsets.all(1),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(3),
-                              color: Colors.orange
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.red
                             ),
                             child: Text(
-                              '${data.discountPercentage!.toInt()}%',
+                              '${product.discountPercentage!.toInt()}%',
                               style: const TextStyle(
-                                color: Colors.white
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w800
                               ),
                             ),
                           )
@@ -260,9 +289,9 @@ class _ProductList extends StatelessWidget {
                   ),
 
                   // Discounted Price
-                  data.discountPercentage != null
+                  product.discountPercentage != null
                     ? Text(
-                        'Rp.${discountedPrice!}',
+                        formattedPriceDiscount,
                         style: const TextStyle(
                           color: Colors.green,
                           fontSize: 14,
@@ -280,11 +309,12 @@ class _ProductList extends StatelessWidget {
                           // Product Rating
                           Row(
                             children: [
-                              const Icon(Icons.star, color: Colors.yellow,),
+                              Icon(Icons.star, color: Colors.orange.shade300),
                               Text(
-                                data.rating.toString(),
+                                product.rating.toString(),
                                 style: const TextStyle(
-                                  fontWeight: FontWeight.bold
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15
                                 ),
                               )
                             ],
@@ -292,7 +322,7 @@ class _ProductList extends StatelessWidget {
                     
                           // Product Review Count
                           Text(
-                            '${data.reviewCount} Ulasan',
+                            '${product.reviewCount} Ulasan',
                             style: const TextStyle(
                               fontSize: 12,
                               color: Colors.black45
