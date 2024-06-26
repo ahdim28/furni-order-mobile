@@ -1,22 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:furni_order/models/product.dart';
+import 'package:intl/intl.dart';
 
 class ProductDetailPage extends StatelessWidget {
   final ProductModel product;
 
   const ProductDetailPage({super.key, required this.product});
 
+  String get formattedPrice {
+    final NumberFormat currencyFormat = NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 0);
+    return currencyFormat.format(product.price);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Furni Order'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.shopping_cart),
-            onPressed: () {},
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
+        backgroundColor: Colors.blue,
+        title: const Text(
+          'Furni Order',
+          style: TextStyle(
+            fontWeight: FontWeight.w800,
+            color: Colors.white,
           ),
-        ],
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -27,72 +37,72 @@ class ProductDetailPage extends StatelessWidget {
               child: Container(
                 color: Colors.grey[300],
                 child: Center(
-                  child: Icon(
-                    Icons.image,
-                    size: 100,
-                    color: Colors.grey[600],
-                  ),
+                  child: Image.asset(
+                    product.image,
+                    fit: BoxFit.cover,
+                  )
                 ),
               ),
             ),
-            SizedBox(height: 8),
+
+            const SizedBox(height: 8),
+
             Text(
-              'Meja Kantor - Hitam',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              product.name,
+              style: const TextStyle(
+                fontSize: 20, 
+                fontWeight: FontWeight.bold
+              ),
             ),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
+
             Text(
-              'Rp900.000',
-              style: TextStyle(fontSize: 20, color: Colors.green),
+              formattedPrice,
+              style: const TextStyle(
+                fontSize: 20, 
+                color: Colors.green
+              ),
             ),
-            SizedBox(height: 4),
+
+            const SizedBox(height: 4),
+
             Row(
               children: [
-                Icon(Icons.star, color: Colors.yellow, size: 24),
-                SizedBox(width: 4),
-                Text('4.5'),
-                SizedBox(width: 8),
-                Text('(20 Ulasan)'),
-                Spacer(),
-                Text('1/5'),
+                Icon(Icons.star, color: Colors.orange.shade300, size: 24),
+                const SizedBox(width: 4),
+                Text(product.rating.toString()),
+                const SizedBox(width: 8),
+                Text('(${product.reviewCount} Ulasan)'),
+                const Spacer(),
+                Text('${product.rating.toString()}/5'),
               ],
             ),
-            SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text('Spesifikasi'),
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text('Informasi'),
-                ),
-              ],
-            ),
-            SizedBox(height: 16),
+
+            const SizedBox(height: 16),
+            
             Expanded(
               child: SingleChildScrollView(
-                child: Text(
-                  'Informasi Produk\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex.',
-                ),
+                child: Text(product.description),
               ),
             ),
+
             ElevatedButton(
-              onPressed: () {},
-              child: Text('Beli Sekarang'),
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size(double.infinity, 50)
+              style: const ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(Colors.blue),
+              ),
+              onPressed: () {
+
+              },
+              child: const Text(
+                'Beli Sekarang',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                )
               ),
             ),
           ],
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: IconButton(
-          icon: Icon(Icons.home),
-          onPressed: () {},
         ),
       ),
     );

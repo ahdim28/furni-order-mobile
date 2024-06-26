@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:furni_order/page/cartPage.dart';
-import 'package:furni_order/page/homePage.dart';
-import 'package:furni_order/page/profilePage.dart';
-import 'package:furni_order/page/transactionPage.dart';
+import 'package:furni_order/page/cart_page.dart';
+import 'package:furni_order/page/home_page.dart';
+import 'package:furni_order/page/profile_page.dart';
+import 'package:furni_order/page/transaction_page.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 
 class Navbar extends StatefulWidget {

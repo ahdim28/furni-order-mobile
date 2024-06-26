@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:furni_order/page/homePage.dart';
+import 'package:furni_order/page/home_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

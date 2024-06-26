@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:furni_order/page/widget/splashScreen.dart';
+import 'package:furni_order/page/widget/splash_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {

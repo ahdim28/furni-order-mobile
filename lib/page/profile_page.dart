@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:furni_order/page/auth/loginPage.dart';
-import 'package:furni_order/page/widget/dialogSuccess.dart';
+import 'package:furni_order/page/auth/login_page.dart';
+import 'package:furni_order/page/widget/dialog_success.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

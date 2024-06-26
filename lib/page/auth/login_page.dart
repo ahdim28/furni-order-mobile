@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:furni_order/page/auth/registerPage.dart';
+import 'package:furni_order/page/auth/register_page.dart';
 import 'package:furni_order/page/widget/navbar.dart';
 
 class LoginPage extends StatefulWidget {
