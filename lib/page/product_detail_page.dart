@@ -15,6 +15,21 @@ class ProductDetailPage extends StatelessWidget {
     return currencyFormat.format(product.price);
   }
 
+  int? getDiscountPrice() {
+    int? discountedPrice;
+
+    if (product.discountPercentage != null) {
+      discountedPrice = (product.price - (product.price * product.discountPercentage!/100)).toInt();
+    }
+
+    return discountedPrice;
+  }
+
+  String get formattedPriceDiscount {
+    final NumberFormat currencyFormat = NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 0);
+    return currencyFormat.format(getDiscountPrice() ?? 0);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,11 +113,31 @@ class ProductDetailPage extends StatelessWidget {
 
             Text(
               formattedPrice,
-              style: const TextStyle(
-                fontSize: 20, 
-                color: Colors.green
+              style: TextStyle(
+                decoration: product.discountPercentage != null
+                  ? TextDecoration.lineThrough
+                  : null,
+                color: product.discountPercentage == null
+                  ? Colors.green
+                  : Colors.red,
+                fontSize: product.discountPercentage == null
+                  ? 20
+                  : 14,
+                fontWeight: FontWeight.w800
               ),
             ),
+            
+            // discount price
+            product.discountPercentage != null
+              ? Text(
+                  formattedPriceDiscount,
+                  style: const TextStyle(
+                    color: Colors.green,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold
+                  ),
+                )
+              : const SizedBox(),
 
             const SizedBox(height: 4),
 
@@ -114,7 +149,23 @@ class ProductDetailPage extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text('(${product.reviewCount} Ulasan)'),
                 const Spacer(),
-                Text('${product.rating.toString()}/5'),
+                product.discountPercentage != null
+                  ? Container(
+                    padding: const EdgeInsets.all(3),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.red
+                      ),
+                      child: Text(
+                        '${product.discountPercentage!.toInt()}%',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w800
+                        ),
+                      ),
+                    )
+                  : const SizedBox()
               ],
             ),
 

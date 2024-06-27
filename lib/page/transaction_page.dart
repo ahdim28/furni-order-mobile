@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:furni_order/data/transaction.dart';
-import 'package:furni_order/models/transaction.dart';
 import 'package:intl/intl.dart';
+
+import '../data/transaction.dart';
+import '../models/transaction.dart';
 
 class TransactionPage extends StatelessWidget {
   const TransactionPage({super.key});

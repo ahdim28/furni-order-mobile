@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:furni_order/data/product.dart';
-import 'package:furni_order/models/product.dart';
-import 'package:furni_order/page/product_detail_page.dart';
+
 import 'package:intl/intl.dart';
+
+import '../data/product.dart';
+import '../models/product.dart';
+import 'product_detail_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,7 +23,6 @@ class _HomePageState extends State<HomePage> {
           children: [
             // profile information
             const _ProfileInformation(),
-
             const SizedBox(height: 20),
 
             // category product list
@@ -45,7 +46,6 @@ class _HomePageState extends State<HomePage> {
                  },
               ),
             ),
-
             const SizedBox(height: 20),
 
             // product list
@@ -194,8 +194,6 @@ class _ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -221,7 +219,7 @@ class _ProductList extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Product Image
+            // product image
             SizedBox(
               height: 180,
               width: 190,
@@ -237,7 +235,7 @@ class _ProductList extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Product Name
+                  // product name
                   Text(
                     product.name,
                     maxLines: 1,
@@ -246,7 +244,7 @@ class _ProductList extends StatelessWidget {
 
                   const SizedBox(height: 3,),
 
-                  // Product Price
+                  // product price
                   Row(
                     children: [
                       Expanded(
@@ -267,7 +265,7 @@ class _ProductList extends StatelessWidget {
 
                       const SizedBox(width: 8,),
                       
-                      // Discount Information
+                      // discount
                       product.discountPercentage != null
                         ? Container(
                           padding: const EdgeInsets.all(1),
@@ -288,7 +286,7 @@ class _ProductList extends StatelessWidget {
                     ],
                   ),
 
-                  // Discounted Price
+                  // discount price
                   product.discountPercentage != null
                     ? Text(
                         formattedPriceDiscount,
@@ -306,7 +304,7 @@ class _ProductList extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          // Product Rating
+                          // product rating
                           Row(
                             children: [
                               Icon(Icons.star, color: Colors.orange.shade300),
@@ -320,7 +318,7 @@ class _ProductList extends StatelessWidget {
                             ],
                           ),
                     
-                          // Product Review Count
+                          // product review count
                           Text(
                             '${product.reviewCount} Ulasan',
                             style: const TextStyle(

@@ -23,6 +23,16 @@ class FurniOrderApp extends StatelessWidget {
           textTheme: GoogleFonts.jostTextTheme(
             Theme.of(context).textTheme,
           ),
+          inputDecorationTheme: const InputDecorationTheme(
+            labelStyle: TextStyle(
+              color: Colors.blue
+            ),
+          ),
+          textSelectionTheme: TextSelectionThemeData(
+            cursorColor: Colors.blue,
+            selectionColor: Colors.blue.withOpacity(0.3),
+            selectionHandleColor: Colors.blue,
+          ),
         ),
         home: const SplashScreen(),
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:furni_order/page/auth/register_page.dart';
-import 'package:furni_order/page/widget/navbar.dart';
+
+import '../auth/register_page.dart';
+import '../widget/navbar.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -21,6 +22,11 @@ class _LoginPageState extends State<LoginPage> {
 
       if (username == 'ahdim' && password == 'ahdim123') {
         FocusScope.of(context).unfocus();
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Login berhasil')),
+        );
+
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const Navbar()),
@@ -52,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Logo
+                // logo
                 const Align(
                   alignment: Alignment.center,
                   child: Image(
@@ -63,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 5),
 
-                // App Title
+                // app title
                 const Text(
                   'Furni Order',
                   style: TextStyle(
@@ -74,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 60),
 
-                // Welcome
+                // welcome
                 const Text(
                   'Selamat Datang',
                   textAlign: TextAlign.center,
@@ -86,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 10),
 
-                // Subtitle
+                // subtitle
                 const Text(
                   'Silahkan login dengan akun anda untuk\nmasuk ke aplikasi',
                   textAlign: TextAlign.center,
@@ -97,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 20),
 
-                // Username
+                // username
                 TextFormField(
                   controller: _username,
                   decoration: const InputDecoration(
@@ -117,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 16.0),
 
-                // Password
+                // password
                 TextFormField(
                   controller: _password,
                   obscureText: true,
@@ -138,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 10),
 
-                // Button
+                // button
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(

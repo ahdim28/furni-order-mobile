@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:furni_order/page/auth/login_page.dart';
-import 'package:furni_order/page/widget/dialog_success.dart';
+
+import 'auth/login_page.dart';
+import 'widget/dialog_success.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -47,6 +48,9 @@ class _ProfilePageState extends State<ProfilePage> {
         actions: [
           IconButton(
             onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Logout berhasil')),
+              );
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const LoginPage()),
@@ -65,7 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               const SizedBox(height: 20),
 
-              // Logo
+              // logo
               const Align(
                 alignment: Alignment.center,
                 child: CircleAvatar(
@@ -75,7 +79,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height: 5),
 
-              // App Title
+              // app title
               const Text(
                 'Ahmad Dimyati',
                 style: TextStyle(
@@ -86,14 +90,14 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height: 10),
 
-              // Subtitle
+              // subtitle
               const Text(
                 'Teknik Informatika at UNIBI',
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 30),
 
-              // Nama
+              // nama
               TextFormField(
                 controller: _nama,
                 decoration: const InputDecoration(
@@ -113,7 +117,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height: 16.0),
 
-              // Email
+              // email
               TextFormField(
                 controller: _email,
                 decoration: const InputDecoration(
@@ -133,7 +137,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height: 16.0),
 
-              // Telepon
+              // telepon
               TextFormField(
                 controller: _telepon,
                 decoration: const InputDecoration(
@@ -153,7 +157,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height: 16.0),
 
-              // Alamat
+              // alamat
               TextFormField(
                 controller: _alamat,
                 maxLines: 3,
@@ -174,7 +178,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height: 16.0),
 
-              // Username
+              // username
               TextFormField(
                 controller: _username,
                 decoration: const InputDecoration(
@@ -194,7 +198,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height: 16.0),
 
-              // Password
+              // password
               TextFormField(
                 controller: _password,
                 obscureText: true,
@@ -209,7 +213,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height: 10),
 
-              // Button
+              // button
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(

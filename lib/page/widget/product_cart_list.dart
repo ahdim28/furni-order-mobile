@@ -11,9 +11,26 @@ class ProductCart extends StatelessWidget {
 
   const ProductCart({super.key, required this.data});
 
-  String _formatCurrency(double value) {
+  // String _formatCurrency(double value) {
+  //   final NumberFormat currencyFormat = NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 0);
+  //   return currencyFormat.format(value);
+  // }
+
+  int? getDiscountPrice() {
+    int? discountedPrice;
+
+    if (data.product.discountPercentage != null) {
+      discountedPrice = (data.product.price - (data.product.price * data.product.discountPercentage!/100)).toInt();
+    } else {
+      discountedPrice = data.product.price.toInt();
+    }
+
+    return discountedPrice;
+  }
+
+   String get formattedPriceDiscount {
     final NumberFormat currencyFormat = NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 0);
-    return currencyFormat.format(value);
+    return currencyFormat.format(getDiscountPrice() ?? 0);
   }
 
   @override
@@ -69,7 +86,7 @@ class ProductCart extends StatelessWidget {
           
               // Product Price
               Text(
-                _formatCurrency(data.product.price),
+                formattedPriceDiscount,
                 style: const TextStyle(
                   color: Colors.green
                 ),

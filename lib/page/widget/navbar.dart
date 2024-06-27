@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:furni_order/page/cart_page.dart';
-import 'package:furni_order/page/home_page.dart';
-import 'package:furni_order/page/profile_page.dart';
-import 'package:furni_order/page/transaction_page.dart';
+
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
+
+import '../cart_page.dart';
+import '../home_page.dart';
+import '../profile_page.dart';
+import '../transaction_page.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({super.key});
@@ -56,10 +58,19 @@ class _NavbarState extends State<Navbar> {
         body: PageView(
           physics: const NeverScrollableScrollPhysics(),
           controller: pageController,
-          children: const <Widget>[
-            HomePage(),
-            CartPage(),
-            TransactionPage()
+          children: <Widget>[
+            const HomePage(),
+            CartPage(
+              onTransaction: () {
+                setState(() {
+                  selectedIndex = 2;
+                });
+                pageController.animateToPage(selectedIndex,
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.easeOutQuad);
+                },
+              ),
+            const TransactionPage()
           ],
         ),
         bottomNavigationBar: WaterDropNavBar(

@@ -13,8 +13,14 @@ class CartController extends ChangeNotifier {
     double totalPrice = 0;
 
     for (var item in _cartItems) {
+
+      double price = item.product.price;
+      if (item.product.discountPercentage != null) {
+        price = (item.product.price - (item.product.price * item.product.discountPercentage!/100));
+      }
+
       if (item.isChecked) {
-        totalPrice += item.product.price * item.count;
+        totalPrice += price * item.count;
       }
     }
 
@@ -22,21 +28,20 @@ class CartController extends ChangeNotifier {
   }
 
   bool get areAllChecked => _cartItems.every((item) => item.isChecked);
-
   bool get noneChecked => _cartItems.every((item) => !item.isChecked);
 
   void add(ProductCartModel item) {
-    // Check if the product is already in the cart.
+    // cek jika produk sudah ada di keranjang
     final index = _cartItems.indexWhere((cartItem) => cartItem.product.id == item.product.id);
     if (index != -1) {
-      // If the product is already in the cart, increment its count.
+      // jika produk sudah ada maka tambakan qtynya saja
       _cartItems[index] = ProductCartModel(
         product: _cartItems[index].product, 
         isChecked: _cartItems[index].isChecked, 
         count: _cartItems[index].count + 1
       );
     } else {
-      // If the product is not in the cart, add it to the cart/
+      // jika produk belum ada di keranjang maka tambahkan
       _cartItems.add(item);
     }
     notifyListeners();
@@ -51,6 +56,7 @@ class CartController extends ChangeNotifier {
         count: _cartItems[index].count
       );
     }
+
     notifyListeners();
   }
 
@@ -63,6 +69,7 @@ class CartController extends ChangeNotifier {
         count: _cartItems[index].count + 1
       );
     }
+
     notifyListeners();
   }
 
@@ -75,6 +82,7 @@ class CartController extends ChangeNotifier {
         count: _cartItems[index].count - 1
       );
     }
+
     notifyListeners();
   }
 
@@ -87,6 +95,7 @@ class CartController extends ChangeNotifier {
     if (index != -1) {
       _cartItems.removeAt(index);
     }
+
     notifyListeners();
   }
 
@@ -98,6 +107,7 @@ class CartController extends ChangeNotifier {
         count: _cartItems[i].count
       );
     }
+    
     notifyListeners();
   }
 

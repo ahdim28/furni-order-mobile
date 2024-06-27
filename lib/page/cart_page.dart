@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:furni_order/controllers/cart_controller.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
-import 'widget/dialog_success.dart';
+import '../controllers/cart_controller.dart';
 import 'widget/purchase_confirmation_dialog.dart';
 import 'widget/custom_checkbox.dart';
 import 'widget/product_cart_list.dart';
 
 class CartPage extends StatefulWidget {
-  const CartPage({super.key});
+
+  final Function() onTransaction;
+
+  const CartPage({super.key, required this.onTransaction});
 
   @override
   State<CartPage> createState() => _CartPageState();
@@ -27,7 +30,7 @@ class _CartPageState extends State<CartPage> {
       bottomNavigationBar: Container(
         height: 80,
         padding: const EdgeInsets.all(15),
-        color: const Color(0xFFD9D9D9),
+        color: const Color.fromARGB(255, 233, 244, 253),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -38,14 +41,19 @@ class _CartPageState extends State<CartPage> {
               children: [
                 const Text(
                   'Total',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal
+                  ),
                 ),
                 Consumer<CartController>(
                   builder: (context, cart, child) {
                     return Text(
                       _formatCurrency(cart.totalPrice),
                       style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green
+                        fontWeight: FontWeight.w900,
+                        color: Colors.green,
+                        fontSize: 18
                       ),
                     );
                   }
@@ -57,6 +65,9 @@ class _CartPageState extends State<CartPage> {
             Consumer<CartController>(
               builder: (context, cart, child) {
                 return ElevatedButton(
+                  style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(Colors.blue),
+                  ),
                   onPressed: () {
                     if (!cart.noneChecked) {
                       showDialog(
@@ -70,9 +81,54 @@ class _CartPageState extends State<CartPage> {
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return const DialogSuccess(
-                                  title: 'Berhasil', 
-                                  description: 'Pembelian Berhasil'
+                                return AlertDialog(
+                                  backgroundColor: Colors.white,
+                                  contentPadding: EdgeInsets.zero,
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      LottieBuilder.asset(
+                                        "assets/lottie/transaction-success.json",
+                                        width: 150,
+                                        height: 150,
+                                        repeat: false,
+                                      ),
+                                      const SizedBox(height: 2),
+                                      const Text(
+                                        'BERHASIL',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      
+                                      const Text(
+                                        'Pembelian berhasil',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                      ),
+                                      const SizedBox(height: 16),
+                                      
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          widget.onTransaction();
+                                        },
+                                        child: const Text(
+                                          'OK',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.blue,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 );
                               },
                             );
@@ -81,15 +137,20 @@ class _CartPageState extends State<CartPage> {
                         ),
                       );
                     } else {
-                      // ScaffoldMessenger.of(context).showSnackBar(
-                      //   const SnackBar(
-                      //     content: Text('Tidak ada item yang dipilih!'),
-                      //   ),
-                      // );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Tidak ada item yang dipilih!'),
+                        ),
+                      );
                     }
                   }, 
                   child: const Text(
-                    'Beli'
+                    'Beli',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    )
                   )
                 );
               }
