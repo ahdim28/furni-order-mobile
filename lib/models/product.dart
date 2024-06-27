@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class CategoryProductModel {
   final String id;
   final String name;
@@ -29,5 +30,17 @@ class ProductModel {
     required this.reviewCount,
     required this.image,
     this.discountPercentage,
+  });
+}
+
+class ProductCartModel {
+  final ProductModel product;
+  final bool isChecked;
+  final int count;
+
+  ProductCartModel({
+    required this.product,
+    required this.isChecked,
+    this.count = 1,
   });
 }
